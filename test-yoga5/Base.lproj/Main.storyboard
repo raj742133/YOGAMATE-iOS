@@ -352,7 +352,7 @@
             </objects>
             <point key="canvasLocation" x="32.824427480916029" y="3.5211267605633805"/>
         </scene>
-        <!--Item-->
+        <!--Routine-->
         <scene sceneID="W15-d0-j6F">
             <objects>
                 <viewController id="bZP-af-N0d" customClass="ViewController" customModule="test_yoga5" customModuleProvider="target" sceneMemberID="viewController">
@@ -565,7 +565,16 @@
                             <constraint firstItem="36c-Vm-TQe" firstAttribute="leading" secondItem="WYP-qM-7mV" secondAttribute="leading" constant="20" id="mPa-rw-rKJ"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" image="calendar.circle" catalog="system" selectedImage="calendar.circle.fill" id="bZD-SG-fvb"/>
+                    <tabBarItem key="tabBarItem" title="Routine" image="calendar" catalog="system" id="bZD-SG-fvb">
+                        <color key="badgeColor" red="0.75686274509999996" green="0.40000000000000002" blue="0.41960784309999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <imageReference key="selectedImage" image="calendar" catalog="system" renderingMode="hierarchical-single">
+                            <hierarchicalColors>
+                                <color red="0.75686274509999996" green="0.40000000000000002" blue="0.41960784309999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color systemColor="secondaryLabelColor"/>
+                                <color systemColor="tertiaryLabelColor"/>
+                            </hierarchicalColors>
+                        </imageReference>
+                    </tabBarItem>
                     <connections>
                         <outlet property="collectionView" destination="R9V-qn-HxN" id="V1A-hg-5zq"/>
                         <outlet property="completedLabel" destination="Zbw-6F-V4P" id="GzJ-8V-Ylw"/>
@@ -609,7 +618,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="MS6-Io-9yc">
-                                <rect key="frame" x="16" y="212.66666666666663" width="370" height="488"/>
+                                <rect key="frame" x="16" y="212.66666666666669" width="370" height="617.33333333333326"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="tEx-6Q-mSK">
                                         <rect key="frame" x="0.0" y="0.0" width="370" height="104"/>
@@ -667,16 +676,16 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ZfQ-4K-0TM">
-                                        <rect key="frame" x="0.0" y="312" width="370" height="104"/>
+                                        <rect key="frame" x="0.0" y="312" width="370" height="233.33333333333337"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Experience Level" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bFp-RP-jzK">
-                                                <rect key="frame" x="0.0" y="0.0" width="370" height="48"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="370" height="112.66666666666667"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U3M-c7-fyZ">
-                                                <rect key="frame" x="0.0" y="56" width="370" height="48"/>
+                                                <rect key="frame" x="0.0" y="120.66666666666674" width="370" height="112.66666666666669"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="48" id="34K-uy-LHc"/>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="48" id="9zW-Qi-whJ"/>
@@ -690,7 +699,7 @@
                                         </subviews>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pnJ-Nb-Hde">
-                                        <rect key="frame" x="0.0" y="440" width="370" height="48"/>
+                                        <rect key="frame" x="0.0" y="569.33333333333337" width="370" height="48"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="IMc-Fp-Eyp"/>
                                         </constraints>
@@ -740,8 +749,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="calendar.circle" catalog="system" width="128" height="123"/>
-        <image name="calendar.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="calendar" catalog="system" width="128" height="107"/>
         <image name="house" catalog="system" width="128" height="104"/>
         <image name="house.fill" catalog="system" width="128" height="104"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
