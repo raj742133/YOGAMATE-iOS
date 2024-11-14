@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vGq-S1-v5Q">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="UCC-25-RIr">
     <device id="retina6_3" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
@@ -332,7 +332,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="Ka7-Vi-BeJ">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="vGq-S1-v5Q" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="MainTabBarController" automaticallyAdjustsScrollViewInsets="NO" id="vGq-S1-v5Q" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="PNK-Xs-q2X">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
@@ -581,6 +581,162 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ClT-z9-HiI" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="827" y="749"/>
+        </scene>
+        <!--Build Routine View Controller-->
+        <scene sceneID="Juz-lw-gyD">
+            <objects>
+                <viewController id="UCC-25-RIr" customClass="BuildRoutineViewController" customModule="test_yoga5" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dkM-pL-AWl">
+                        <rect key="frame" x="0.0" y="0.0" width="402" height="874"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Build Your Routine" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AYq-x2-09c">
+                                <rect key="frame" x="16" y="121.99999999999999" width="370" height="31.333333333333329"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31.333333333333314" id="Yhk-ou-HFr"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Personalize your yoga practice" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q3c-0g-Jie" userLabel="sub label">
+                                <rect key="frame" x="16" y="161.33333333333334" width="370" height="19.333333333333343"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="19.333333333333343" id="ly5-3J-NG1"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="MS6-Io-9yc">
+                                <rect key="frame" x="16" y="212.66666666666663" width="370" height="488"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="tEx-6Q-mSK">
+                                        <rect key="frame" x="0.0" y="0.0" width="370" height="104"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Your Age Group" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ffI-1b-1zm">
+                                                <rect key="frame" x="0.0" y="0.0" width="370" height="48"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ny-dK-igJ">
+                                                <rect key="frame" x="0.0" y="56.000000000000028" width="370" height="48"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="48" id="ksK-LO-SW4"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="gray" title="Button"/>
+                                                <connections>
+                                                    <action selector="ageGroupTapped:" destination="UCC-25-RIr" eventType="touchUpInside" id="V5t-zL-F9y"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="uvh-4i-7WB">
+                                        <rect key="frame" x="0.0" y="128.00000000000003" width="370" height="159.99999999999997"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Choose Your Practice Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JrH-Pj-fmZ">
+                                                <rect key="frame" x="0.0" y="0.0" width="370" height="48"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tfq-VB-dnj">
+                                                <rect key="frame" x="0.0" y="56" width="370" height="48"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="48" id="Ft2-mD-Yo8"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="gray" title="Button"/>
+                                                <connections>
+                                                    <action selector="sessionTapped:" destination="UCC-25-RIr" eventType="touchUpInside" id="xBa-y8-LWu"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tbM-u8-gw7">
+                                                <rect key="frame" x="0.0" y="112" width="370" height="48"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="48" id="P1T-dT-FjL"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="gray" title="Button"/>
+                                                <connections>
+                                                    <action selector="timeTapped:" destination="UCC-25-RIr" eventType="touchUpInside" id="TbS-Ng-aqc"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ZfQ-4K-0TM">
+                                        <rect key="frame" x="0.0" y="312" width="370" height="104"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Experience Level" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bFp-RP-jzK">
+                                                <rect key="frame" x="0.0" y="0.0" width="370" height="48"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U3M-c7-fyZ">
+                                                <rect key="frame" x="0.0" y="56" width="370" height="48"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="48" id="34K-uy-LHc"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="48" id="9zW-Qi-whJ"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="gray" title="Button"/>
+                                                <connections>
+                                                    <action selector="experienceLevelTapped:" destination="UCC-25-RIr" eventType="touchUpInside" id="YzW-1a-gJj"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pnJ-Nb-Hde">
+                                        <rect key="frame" x="0.0" y="440" width="370" height="48"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="48" id="IMc-Fp-Eyp"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Button">
+                                            <color key="baseBackgroundColor" red="0.75686274509999996" green="0.40000000000000002" blue="0.41960784309999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="continueTapped:" destination="UCC-25-RIr" eventType="touchUpInside" id="8qH-fD-NzI"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="pnJ-Nb-Hde" firstAttribute="top" secondItem="ZfQ-4K-0TM" secondAttribute="bottom" constant="24" id="h6U-pz-PXQ"/>
+                                    <constraint firstItem="ZfQ-4K-0TM" firstAttribute="top" secondItem="tEx-6Q-mSK" secondAttribute="bottom" constant="208" id="qWj-ut-OXG"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="EBq-nS-Vxs"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="EBq-nS-Vxs" firstAttribute="trailing" secondItem="q3c-0g-Jie" secondAttribute="trailing" constant="16" id="1qw-Gq-Rof"/>
+                            <constraint firstItem="AYq-x2-09c" firstAttribute="leading" secondItem="EBq-nS-Vxs" secondAttribute="leading" constant="16" id="CEH-iz-mck"/>
+                            <constraint firstItem="EBq-nS-Vxs" firstAttribute="bottom" secondItem="MS6-Io-9yc" secondAttribute="bottom" constant="10" id="D6b-m4-gZg"/>
+                            <constraint firstItem="MS6-Io-9yc" firstAttribute="leading" secondItem="EBq-nS-Vxs" secondAttribute="leading" constant="16" id="Lnh-C4-joa"/>
+                            <constraint firstItem="q3c-0g-Jie" firstAttribute="leading" secondItem="EBq-nS-Vxs" secondAttribute="leading" constant="16" id="RPD-kq-QCH"/>
+                            <constraint firstItem="q3c-0g-Jie" firstAttribute="top" secondItem="AYq-x2-09c" secondAttribute="bottom" constant="8" id="Rlc-hu-Ozu"/>
+                            <constraint firstItem="EBq-nS-Vxs" firstAttribute="trailing" secondItem="AYq-x2-09c" secondAttribute="trailing" constant="16" id="adX-4x-IUr"/>
+                            <constraint firstItem="EBq-nS-Vxs" firstAttribute="trailing" secondItem="q3c-0g-Jie" secondAttribute="trailing" constant="16" id="dHg-w9-aBv"/>
+                            <constraint firstItem="q3c-0g-Jie" firstAttribute="top" secondItem="AYq-x2-09c" secondAttribute="bottom" constant="8" id="edS-Lz-lcw"/>
+                            <constraint firstItem="MS6-Io-9yc" firstAttribute="top" secondItem="q3c-0g-Jie" secondAttribute="bottom" constant="32" id="ege-w7-mX2"/>
+                            <constraint firstItem="AYq-x2-09c" firstAttribute="top" secondItem="EBq-nS-Vxs" secondAttribute="top" constant="60" id="gNP-5k-CC2"/>
+                            <constraint firstItem="EBq-nS-Vxs" firstAttribute="trailing" secondItem="MS6-Io-9yc" secondAttribute="trailing" constant="16" id="wjp-5c-80a"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="ageGroupButton" destination="0ny-dK-igJ" id="N4A-CZ-BCO"/>
+                        <outlet property="continueButton" destination="pnJ-Nb-Hde" id="BsX-ms-cNQ"/>
+                        <outlet property="experienceLevelButton" destination="U3M-c7-fyZ" id="4jj-dS-V2B"/>
+                        <outlet property="sessionButton" destination="tfq-VB-dnj" id="zhO-wh-qlU"/>
+                        <outlet property="timeButton" destination="tbM-u8-gw7" id="KsA-dV-BIe"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="swp-ga-sqw" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1775" y="735"/>
         </scene>
     </scenes>
     <resources>
