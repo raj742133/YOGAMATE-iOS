@@ -1,17 +1,29 @@
 //
-//  RoutineScreenViewController.swift
+//  ViewController.swift
 //  test-yoga5
 //
 //  Created by user@22 on 04/11/24.
 //
 
-import UIKit
 
 import UIKit
 
-class ViewController: UIViewController,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class ViewController: UIViewController,UIContextMenuInteractionDelegate,UITableViewDataSource, UITableViewDelegate  {
+    
+    let data: [Poses] = posess
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return data.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "routinecell", for: indexPath) as! RoutineTableViewCell
+        
+        cell.poseImg.image = UIImage(named: data[indexPath.row].imageName)
+        cell.name.text = data[indexPath.row].name
+        
+        return cell
+    }
 
-    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var progressPlaceholderView: UIView!
     @IBOutlet weak var completedLabel: UILabel!
     @IBOutlet weak var inProgressLabel: UILabel!
@@ -22,7 +34,70 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
     
     @IBOutlet weak var extendedLifeLabel: UILabel!
     
-    @IBOutlet weak var recentPosesCollectionView: UICollectionView!
+    @IBOutlet weak var selectedDateLabel: UILabel!
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    
+    @IBOutlet weak var routineMenu: UIButton!
+    
+    @IBAction func routineMenuTapped(_ sender: UIButton) {
+        
+        UIView.animate(withDuration: 0.1,
+                       animations: {
+            sender.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+        },
+                       completion: { _ in
+            UIView.animate(withDuration: 0.1) {
+                sender.transform = CGAffineTransform.identity
+            }
+        })
+    }
+    
+    
+    private var collectionView: UICollectionView!
+    private var headerLabel: UILabel!
+    private var currentDate: Date = Date()
+    private var dates: [Date?] = []
+    private let calendar = Calendar.current
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM yyyy"
+        return formatter
+    }()
+    private let dayLabels = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
+    
+ 
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ -> UIMenu? in
+            let changeRoutine = UIAction(title: "Change Routine", image: UIImage(systemName: "checkmark.circle")) { _ in
+                self.navigateToBuildRoutine()
+            }
+
+            let viewCalendar = UIAction(title: "View Calendar", image: UIImage(systemName: "calendar.circle")) { _ in
+                self.presentCalendar()
+            }
+
+            let viewLeaderboard = UIAction(title: "View Leaderboard", image: UIImage(systemName: "chart.line.uptrend.xyaxis.circle")) { _ in
+                print("View Leaderboard tapped")
+            }
+
+            return UIMenu(title: "Menu", children: [changeRoutine, viewCalendar, viewLeaderboard])
+        }
+    }
+    
+    func navigateToBuildRoutine() {
+        // Instantiate BuildRoutineViewController from the storyboard
+        let storyboard = UIStoryboard(name: "Main", bundle: nil) // Replace "Main" with your storyboard name if different
+        guard let buildRoutineVC = storyboard.instantiateViewController(withIdentifier: "BuildRoutineViewController") as? BuildRoutineViewController else {
+            print("BuildRoutineViewController could not be found.")
+            return
+        }
+
+        // Push BuildRoutineViewController onto the navigation stack
+        self.navigationController?.pushViewController(buildRoutineVC, animated: true)
+    }
+
     
   
   
@@ -40,45 +115,17 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
         collectionView.delegate = self
     }*/
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 350, height: 75)
-        
-    }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        words.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "wordCell", for: indexPath)
-        cell.layer.borderColor = UIColor.lightGray.cgColor
-        cell.layer.borderWidth = 1
-        cell.layer.cornerRadius = 10
-        cell.layer.backgroundColor = UIColor.white.cgColor
-        cell.layer.shadowColor = UIColor.lightGray.cgColor
-        cell.layer.shadowOffset = CGSize(width: 1, height: 2.0)
-        cell.layer.shadowOpacity = 0.3
-        cell.layer.shadowRadius = 2.0
-        cell.layer.masksToBounds = false
-        if let wordCell = cell as? WordCollectionViewCell {
-            wordCell.wordLabel.text = String(words[indexPath.row])
-        }
-        
-        return cell
-    }
-    
     var progressData = ProgressDataModel(completed: 6, inProgress: 2, remaining: 1, totalTime: 22, completedTime: 18)
     
     var poses: [Pose] = [
-            Pose(name: "Downward Dog", imageName: "downward_dog"),
-            Pose(name: "Warrior II", imageName: "warrior_ii"),
-            Pose(name: "Tree Pose", imageName: "tree_pose"),
-            Pose(name: "Bridge Pose", imageName: "bridge_pose"),
-            // Add more poses as needed
-        ]
-        
-
+        Pose(name: "Downward Dog", imageName: "downward_dog"),
+        Pose(name: "Warrior II", imageName: "warrior_ii"),
+        Pose(name: "Tree Pose", imageName: "tree_pose"),
+        Pose(name: "Bridge Pose", imageName: "bridge_pose"),
+        // Add more poses as needed
+    ]
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -93,17 +140,25 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
         
         /*createCircularProgress(view: progressPlaceholderView, radius: 22, lineWidth: 12, progress: progressData.timeCompletionPercentage, duration: 1.5, color: .systemGreen, backgroundColor: UIColor.systemGreen.withAlphaComponent(0.2))*/
         
+        let contextMenuInteraction = UIContextMenuInteraction(delegate: self)
+        routineMenu.addInteraction(contextMenuInteraction)
+        routineMenu.showsMenuAsPrimaryAction = true
         
-        if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            flowLayout.estimatedItemSize = CGSizeZero
-        }
-        collectionView.dataSource = self
-        collectionView.delegate = self
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+        
+        tableView.rowHeight = 120
+        
+        selectedDateLabel.text = ""
+        
+        
+        
         
         
         
     }
-
+    
     func updateUI(with data: ProgressDataModel) {
         // Set each label's text with bold styling for dynamic parts
         completedLabel.attributedText = createBoldAttributedText(labelText: "Completed: ", valueText: "\(data.completed)")
@@ -111,10 +166,10 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
         remainingLabel.attributedText = createBoldAttributedText(labelText: "Remaining: ", valueText: "\(data.remaining)")
         timeLabel.attributedText = createBoldAttributedText(labelText: "Time: ", valueText: "\(data.completedTime)/\(data.totalTime) min")
         // Update life expectancy messages
-            lifeExpectancyLabel.text = data.lifeExpectancy.lifeExpectancyMessage
-            extendedLifeLabel.text = data.lifeExpectancy.extendedLifeMessage
+        lifeExpectancyLabel.text = data.lifeExpectancy.lifeExpectancyMessage
+        extendedLifeLabel.text = data.lifeExpectancy.extendedLifeMessage
     }
-
+    
     func createBoldAttributedText(labelText: String, valueText: String) -> NSAttributedString {
         // Define the regular and bold fonts
         let regularFont = UIFont.systemFont(ofSize: 16)
@@ -138,7 +193,7 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
         regularAttributedString.append(boldAttributedString)
         return regularAttributedString
     }
-
+    
     
     func createCircularProgress(view: UIView, radius: CGFloat, lineWidth: CGFloat, progress: CGFloat, duration: CFTimeInterval, color: UIColor, backgroundColor: UIColor) {
         // Define the circle path based on the center and radius
@@ -161,7 +216,7 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
         
         // Add the background layer behind the progress layer
         view.layer.addSublayer(backgroundLayer)
-
+        
         // Create the progress layer for the actual progress indicator
         let progressLayer = CAShapeLayer()
         progressLayer.path = circlePath.cgPath
@@ -182,19 +237,103 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
         animation.isRemovedOnCompletion = false
         progressLayer.add(animation, forKey: "progressAnimation")
     }
-
-
-}
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    // MARK: - Show Date Picker
+    func showDatePicker() {
+        let alert = UIAlertController(title: "Select Date", message: nil, preferredStyle: .actionSheet)
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .date
+        datePicker.preferredDatePickerStyle = .wheels
+        datePicker.translatesAutoresizingMaskIntoConstraints = false
+        
+        alert.view.addSubview(datePicker)
+        NSLayoutConstraint.activate([
+            datePicker.leadingAnchor.constraint(equalTo: alert.view.leadingAnchor, constant: 8),
+            datePicker.trailingAnchor.constraint(equalTo: alert.view.trailingAnchor, constant: -8),
+            datePicker.topAnchor.constraint(equalTo: alert.view.topAnchor, constant: 45),
+            datePicker.heightAnchor.constraint(equalToConstant: 200)
+        ])
+        
+        let selectAction = UIAlertAction(title: "Select", style: .default) { _ in
+            self.handleDateSelection(datePicker.date) // Update the label here
+        }
+        alert.addAction(selectAction)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        let heightConstraint = NSLayoutConstraint(item: alert.view!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 300)
+        alert.view.addConstraint(heightConstraint)
+        
+        self.present(alert, animated: true, completion: nil)
     }
-    */
 
+    
+    func handleDateSelection(_ date: Date) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none // Only show the date, no time
+        let formattedDate = dateFormatter.string(from: date)
+        
+        // Update the selectedDateLabel with the formatted date
+        selectedDateLabel.text = formattedDate
+    }
+
+
+    
+    
+    
+    
+    func presentCalendar() {
+        let alert = UIAlertController(title: "Select a Date", message: nil, preferredStyle: .alert)
+        
+        // Create a UIDatePicker
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .date
+        datePicker.preferredDatePickerStyle = .wheels
+        datePicker.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Add the date picker to the alert
+        alert.view.addSubview(datePicker)
+        NSLayoutConstraint.activate([
+            datePicker.leadingAnchor.constraint(equalTo: alert.view.leadingAnchor, constant: 8),
+            datePicker.trailingAnchor.constraint(equalTo: alert.view.trailingAnchor, constant: -8),
+            datePicker.topAnchor.constraint(equalTo: alert.view.topAnchor, constant: 50),
+            datePicker.bottomAnchor.constraint(equalTo: alert.view.bottomAnchor, constant: -60)
+        ])
+        
+        // Add "Select" and "Cancel" actions
+        let selectAction = UIAlertAction(title: "Select", style: .default) { _ in
+            let selectedDate = datePicker.date
+            self.handleDateSelection(selectedDate)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(selectAction)
+        alert.addAction(cancelAction)
+        
+        // Adjust alert height and present it
+        let heightConstraint = NSLayoutConstraint(item: alert.view!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 300)
+        alert.view.addConstraint(heightConstraint)
+        
+        self.present(alert, animated: true, completion: nil)
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
+}
 

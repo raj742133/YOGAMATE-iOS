@@ -7,8 +7,44 @@
 
 import UIKit
 
-class HomeScreenViewController: UIViewController {
+class HomeScreenViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource {
     
+    
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return yogatitle.count
+    }
+    
+    
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CustomCollectionViewCell
+        cell.yogatitle.text = yogatitle[indexPath.row]
+        cell.yogasubtitle.text = yogasubtitle[indexPath.row]
+        cell.yogaimg.image = UIImage(named: yogaimage[indexPath.row])
+        cell.yogaimg.contentMode = .scaleAspectFill
+        cell.yogaimg.clipsToBounds = true
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ViewController1") as! ViewController1
+        
+        vc.mimg = UIImage(named: yogaimage[indexPath.row]) // Pass the image
+        vc.mdesc = YogaData.yogadescriptions[indexPath.row] // Pass the description
+        vc.videoFileName = YogaData.yogavideo[indexPath.row] // Pass the video file name
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+
+
+    
+    
+    
+    var yogatitle = YogaData.yogatitle
+    var yogaimage = YogaData.yogaimage
+    var yogasubtitle = YogaData.yogasubtitle
+    
+    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var progressPlaceholderView: UIView!
     @IBOutlet weak var completedLabel: UILabel!
     @IBOutlet weak var inProgressLabel: UILabel!
@@ -19,23 +55,22 @@ class HomeScreenViewController: UIViewController {
     
     @IBOutlet weak var extendedLifeLabel: UILabel!
     
-    @IBOutlet weak var recentPosesCollectionView: UICollectionView!
     
     @IBOutlet weak var timeProgreesPlaceholderView: UIView!
     // Sample data for testing
     var progressData = ProgressDataModel(completed: 6, inProgress: 2, remaining: 1, totalTime: 22, completedTime: 18)
     
-    var poses: [Pose] = [
-            Pose(name: "Downward Dog", imageName: "downward_dog"),
-            Pose(name: "Warrior II", imageName: "warrior_ii"),
-            Pose(name: "Tree Pose", imageName: "tree_pose"),
-            Pose(name: "Bridge Pose", imageName: "bridge_pose"),
-            // Add more poses as needed
-        ]
-        
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        dateLabel.text = getCurrentDate()
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
+            navigationItem.title = "Good Morning"
         
         // Display the data in the UI
         updateUI(with: progressData)
@@ -48,9 +83,66 @@ class HomeScreenViewController: UIViewController {
         
         createCircularProgress(view: progressPlaceholderView, radius: 71, lineWidth: 7, progress: progressData.timeCompletionPercentage, duration: 1.5, color: .systemGreen, backgroundColor: UIColor.systemGreen.withAlphaComponent(0.2))
         
+        if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            let itemsPerRow: CGFloat = 2 // Two items per row
+            let padding: CGFloat = 6 // Adjust padding here to reduce spacing
+            let totalPadding = padding * (itemsPerRow + 1)
+            let availableWidth = collectionView.frame.width - totalPadding
+            let itemWidth = availableWidth / itemsPerRow
+            //collectionView.layoutIfNeeded()
+
+            
+            layout.itemSize = CGSize(width: itemWidth, height: itemWidth + 70) // Adjust height if needed
+            layout.minimumInteritemSpacing = padding / 2 // Reduce spacing between items
+            layout.minimumLineSpacing = padding // Reduce spacing between rows
+            layout.sectionInset = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
+            //collectionView.reloadData()
+            
+            
         
-        
+        }
     }
+    
+    func getCurrentDate() -> String {
+        let currentDate = Date()
+        let formatter = DateFormatter()
+        
+        // Set the desired date format
+        formatter.dateFormat = "EEEE dd MMM" // Full day, day of the month, short month
+        
+        // Set the locale to ensure correct formatting
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        return formatter.string(from: currentDate).uppercased()
+    }
+
+    
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let accessoryView = UIButton()
+        let image = UIImage(named:"profile")
+        
+        accessoryView.setImage(image, for: .normal)
+        accessoryView.frame.size = CGSize(width: 34, height: 34)
+        accessoryView.addTarget(self, action: #selector(profileButtonTapped), for: .touchUpInside)
+        
+        let largeTitleView = navigationController?.navigationBar.subviews.first { subview in
+            return String(describing: type(of: subview)) == "_UINavigationBarLargeTitleView"
+        }
+        largeTitleView?.perform(Selector(("setAccessoryView:")), with: accessoryView)
+        largeTitleView?.perform(Selector(("setAlignAccessoryViewToTitleBaseline:")), with: nil)
+        largeTitleView?.perform(Selector(("updateContent")))
+    }
+
+    @objc private func profileButtonTapped() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let profileVC = storyboard.instantiateViewController(withIdentifier: "ProfileViewController") as? ProfileTableViewController {
+            navigationController?.pushViewController(profileVC, animated: true)
+        }
+    }
+    
+
 
     func updateUI(with data: ProgressDataModel) {
         // Set each label's text with bold styling for dynamic parts
@@ -130,5 +222,8 @@ class HomeScreenViewController: UIViewController {
         animation.isRemovedOnCompletion = false
         progressLayer.add(animation, forKey: "progressAnimation")
     }
+    
+    
+    
     
 }

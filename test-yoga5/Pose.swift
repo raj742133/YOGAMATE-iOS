@@ -12,3 +12,4 @@ struct Pose {
     let name: String
     let imageName: String  // Name of the image asset
 }
+
