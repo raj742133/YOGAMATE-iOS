@@ -58,3 +58,34 @@ YOGAMATE is an intuitive iOS application that serves as your personal yoga instr
 - Minimum 2GB RAM
 - 500MB available storage
 
+  ┌─────────────────────────────────────────────┐
+│                 YOGAMATE-iOS                │
+│                 Architecture                │
+├─────────────────────────────────────────────┤
+│  View Layer (SwiftUI/UIKit)                │
+│  ├── SwiftUI Views                         │
+│  ├── UIKit ViewControllers                 │
+│  └── Custom UI Components                  │
+├─────────────────────────────────────────────┤
+│  ViewModel Layer                           │
+│  ├── Business Logic                       │
+│  ├── Data Binding                         │
+│  └── State Management                     │
+├─────────────────────────────────────────────┤
+│  Model Layer                              │
+│  ├── Data Models                          │
+│  ├── Core Data Models                     │
+│  └── Network Models                       │
+├─────────────────────────────────────────────┤
+│  Service Layer                            │
+│  ├── Network Services                     │
+│  ├── Database Services                    │
+│  ├── Authentication Services              │
+│  └── ML/AI Services                       │
+├─────────────────────────────────────────────┤
+│  Repository Layer                         │
+│  ├── Data Repository                      │
+│  ├── Cache Management                     │
+│  └── Data Source Abstraction              │
+└─────────────────────────────────────────────┘
+
